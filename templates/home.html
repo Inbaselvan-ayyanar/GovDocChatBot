@@ -1,0 +1,235 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #4285f4;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #3367d6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Application</h1>
+    <a href="/train" class="btn">Train</a>
+    <a href="/predict" class="btn">Predict</a>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Assistant</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --background: #f9fafb;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            width: 280px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 24px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(99, 102, 241, 0.1);
+            border-radius: 50%;
+        }
+
+        .card-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--primary);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--text-light);
+            margin-bottom: 24px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(99, 102, 241, 0.1);
+        }
+
+        .footer {
+            margin-top: 64px;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .card {
+                width: 100%;
+                max-width: 340px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>ML Assistant</h1>
+            <p class="subtitle">Your intelligent machine learning companion. Train models and make predictions with just a few clicks.</p>
+        </div>
+
+        <div class="card-container">
+            <div class="card">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 100-16 8 8 0 000 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/>
+                    </svg>
+                </div>
+                <h2>Train Model</h2>
+                <p>Upload your dataset and train a custom machine learning model tailored to your specific needs.</p>
+                <a href="/train" class="btn">Start Training</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M19.903 8.586a.997.997 0 00-.196-.293l-6-6a.997.997 0 00-.293-.196c-.03-.014-.062-.022-.094-.033a.991.991 0 00-.259-.051C13.04 2.011 13.021 2 13 2H6c-1.103 0-2 .897-2 2v16c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2V9c0-.021-.011-.04-.013-.062a.99.99 0 00-.051-.259c-.01-.032-.019-.063-.033-.093zM16.586 8H14V5.414L16.586 8zM6 20V4h6v5a1 1 0 001 1h5l.002 10H6z"/>
+                        <path d="M8 12h8v2H8zm0 4h8v2H8zm0-8h2v2H8z"/>
+                    </svg>
+                </div>
+                <h2>Make Predictions</h2>
+                <p>Use your trained model to make accurate predictions on new data with real-time results.</p>
+                <a href="/predict" class="btn">Start Predicting</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 ML Assistant. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

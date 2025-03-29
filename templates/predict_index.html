@@ -1,0 +1,126 @@
+<DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .chat-container {
+            background: white;
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            background: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            text-align: left;
+        }
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background: #007bff;
+            color: white;
+            text-align: right;
+            margin-left: auto;
+        }
+        .bot-message {
+            background: #e9e9eb;
+            color: black;
+            text-align: left;
+        }
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+        #userInput {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h2>Chatbot</h2>
+        <div class="chat-box" id="chatBox">
+            <div class="message bot-message">Hi, How can i help you today?
+                
+            </div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type a message..." autofocus>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("userInput");
+            const chatBox = document.getElementById("chatBox");
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            addMessage(message, "user");
+
+            fetch("/chat", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({message: message})
+            })
+            .then(response => response.json())
+            .then(data => {
+                addMessage(data.response, "bot");
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                addMessage("Error processing your message.", "bot");
+            });
+
+            userInput.value = "";
+        }
+
+        function addMessage(text, sender) {
+            const chatBox = document.getElementById("chatBox");
+            const messageDiv = document.createElement("div");
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = text;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
+
+
+

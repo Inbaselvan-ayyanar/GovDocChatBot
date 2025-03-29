@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: #4285f4;
+        }
+        
+        .upload-area.dragging {
+            background-color: #f0f8ff;
+            border-color: #4285f4;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-label {
+            display: block;
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .file-icon {
+            font-size: 48px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #3367d6;
+        }
+        
+        .file-name {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        .alert {
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-error {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .alert-success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>File Upload</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form action="/upload" method="post" enctype="multipart/form-data" id="upload-form">
+            <div class="upload-area" id="drop-area">
+                <div class="file-icon">file</div>
+                <label for="file" class="file-label">
+                    Drag & drop files here or click to browse
+                </label>
+                <input type="file" name="file" id="file" class="file-input">
+                <div class="file-name" id="file-name"></div>
+            </div>
+            <button type="submit" class="btn">Upload File</button>
+        </form>
+    </div>
+    
+    <script>
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file');
+        const fileName = document.getElementById('file-name');
+        
+        // Open file browser when clicking on the drop area
+        dropArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        // Display file name when selected
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                fileName.textContent = `Selected: ${fileInput.files[0].name}`;
+            } else {
+                fileName.textContent = '';
+            }
+        });
+        
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        // Highlight drop area when dragging over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            dropArea.classList.add('dragging');
+        }
+        
+        function unhighlight() {
+            dropArea.classList.remove('dragging');
+        }
+        
+        // Handle dropped files
+        dropArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                fileInput.files = files;
+                fileName.textContent = `Selected: ${files[0].name}`;
+            }
+        }
+    </script>
+</body>
+</html>
+        
